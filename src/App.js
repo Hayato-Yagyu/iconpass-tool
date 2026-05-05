@@ -723,7 +723,7 @@ const BLOCK_DEFINITIONS = buildAllBlockDefinitions();
 ========================================================= */
 const COMMUTER_DEFINITIONS = {
   ticketPrintHead: [...commuterPrint31, ...commuterPrint32, ...commuterPrint33, ...commuterPrint34, ...commuterPrint35, ...commuterPrint36, ...commuterPrint37, ...commuterPrint38, ...commuterPrint39],
-  busPrivateBlock0: busCommon44,
+  busPrivateBlock0: busPrivate46,
 };
 
 const COMMUTER_TICKET_RELEASE_INFORMATION_DEFINITIONS = [
