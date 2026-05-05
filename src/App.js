@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updatePassword, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import "./App.css";
 
 const firebaseConfig = {
@@ -1033,6 +1033,11 @@ export default function App() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
+  const [showPasswordChange, setShowPasswordChange] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+
   const [logText, setLogText] = useState("");
   const [fileName, setFileName] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -1094,6 +1099,34 @@ export default function App() {
 
   const handleLogout = async () => {
     await signOut(auth);
+  };
+
+  const handleChangePassword = async () => {
+    try {
+      setPasswordMessage("");
+
+      if (!user || !user.email) return;
+
+      // 再認証（重要）
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+      await reauthenticateWithCredential(user, credential);
+
+      // パスワード更新
+      await updatePassword(user, newPassword);
+
+      setPasswordMessage("パスワード変更成功");
+
+      setTimeout(() => {
+        setShowPasswordChange(false);
+      }, 800);
+
+      setCurrentPassword("");
+      setNewPassword("");
+    } catch (e) {
+      console.error(e);
+      setPasswordMessage("パスワード変更失敗");
+    }
   };
 
   const loadLogFile = async (file) => {
@@ -1173,9 +1206,70 @@ export default function App() {
         <h1>iconpass-tool</h1>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ fontSize: 13 }}>{user.email}</span>
+          <button onClick={() => setShowPasswordChange(!showPasswordChange)}>パスワード変更</button>
           <button onClick={handleLogout}>ログアウト</button>
         </div>
       </div>
+
+      {showPasswordChange && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+          onClick={() => setShowPasswordChange(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: 360,
+              background: "#fff",
+              padding: 24,
+              borderRadius: 8,
+              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+            }}
+          >
+            <h3 style={{ marginTop: 0 }}>パスワード変更</h3>
+
+            <div style={{ marginBottom: 12 }}>
+              <input
+                type="password"
+                placeholder="現在のパスワード"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                style={{ width: "100%", padding: 8 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleChangePassword();
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: 12 }}>
+              <input type="password" placeholder="新しいパスワード" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} style={{ width: "100%", padding: 8 }} />
+            </div>
+
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={handleChangePassword} style={{ flex: 1 }}>
+                更新
+              </button>
+
+              <button onClick={() => setShowPasswordChange(false)} style={{ flex: 1 }}>
+                キャンセル
+              </button>
+            </div>
+
+            {passwordMessage && <div style={{ marginTop: 12 }}>{passwordMessage}</div>}
+          </div>
+        </div>
+      )}
 
       <div
         onDragOver={(e) => {
