@@ -719,94 +719,6 @@ function buildAllBlockDefinitions() {
 const BLOCK_DEFINITIONS = buildAllBlockDefinitions();
 
 /* =========================================================
-   request 定義
-========================================================= */
-const REQUEST_COMMON_DATA_DEFINITIONS = [
-  { no: 2, name: "発行機関コード", key: "issuing_agency_code", type: "string" },
-  { no: 3, name: "設置箇所", key: "installation_location", type: "string" },
-  { no: 4, name: "端末番号", key: "terminal_number", type: "string" },
-  { no: 5, name: "発行所コード", key: "issue_office_code", type: "string" },
-  { no: 6, name: "機種コード", key: "model_code", type: "string" },
-  { no: 7, name: "業務種別コード", key: "business_type_code", type: "string" },
-  { no: 8, name: "要求送信年月日", key: "request_sent_date", type: "string" },
-  { no: 9, name: "要求送信時刻", key: "request_sent_time", type: "string" },
-];
-
-const REQUEST_NEW_TICKET_DEFINITIONS = [
-  { no: 11, name: "カード番号（IDi）", key: "idi", type: "string" },
-  { no: 12, name: "氏名カナ", key: "name_kana", type: "string" },
-  { no: 13, name: "電話番号", key: "telephone_number", type: "string" },
-  { no: 14, name: "カード検索番号", key: "card_search_number", type: "string" },
-  { no: 15, name: "年齢", key: "age", type: "number" },
-  { no: 16, name: "生年月日", key: "date_of_birth", type: "string" },
-  { no: 17, name: "入金区分", key: "deposit_category", type: "number" },
-  { no: 18, name: "デポジット額", key: "deposit_amount", type: "number" },
-  { no: 19, name: "SF券種コード", key: "sf_type_code", type: "number" },
-  { no: 20, name: "カード制御コード", key: "card_control_code", type: "number" },
-  { no: 21, name: "一件明細ID", key: "single_item_id", type: "number" },
-  { no: 22, name: "性別", key: "sex_code", type: "number" },
-  { no: 23, name: "鉄道券番号", key: "railway_ticket_number", type: "string" },
-  { no: 24, name: "鉄道定期券ID", key: "railway_commuter_pass_id", type: "number" },
-  { no: 25, name: "売上管理日", key: "sales_management_date", type: "string" },
-  { no: 26, name: "IC取扱通番", key: "handling_serial_number", type: "number" },
-  { no: 27, name: "実行ID", key: "execution_id", type: "number" },
-];
-
-const REQUEST_COMMUTER_PASS_DEFINITIONS = [
-  { no: 29, name: "書込みエリア", key: "writing_area", type: "number" },
-  { no: 30, name: "発行機関コード", key: "company_code", type: "string" },
-  { no: 31, name: "有効開始日", key: "start_date_judge", type: "string" },
-  { no: 32, name: "有効終了日", key: "end_date_judge", type: "string" },
-  { no: 33, name: "券種コード", key: "ticket_type_code", type: "string" },
-  { no: 34, name: "発行日", key: "issue_date", type: "string" },
-  { no: 35, name: "発売金額", key: "total_amount", type: "number" },
-  { no: 36, name: "発売通用期間", key: "validity_period", type: "string" },
-  { no: 37, name: "割引コード1", key: "discount_code1", type: "string" },
-  { no: 38, name: "割引コード2", key: "discount_code2", type: "string" },
-  { no: 39, name: "発売共通制御コード", key: "release_control_code", type: "string" },
-  { no: 40, name: "カード印章コード", key: "card_stamp_code", type: "number" },
-  { no: 41, name: "機種コード", key: "model_code", type: "string" },
-  { no: 42, name: "バス定期券ID", key: "bus_commuter_pass_id", type: "number" },
-  { no: 43, name: "発行所番号・発行機号機コード", key: "installation_terminal_number", type: "string" },
-  { no: 44, name: "原券発行日", key: "original_issue_date", type: "string" },
-  { no: 45, name: "使用開始日", key: "start_date_disp", type: "string" },
-  { no: 46, name: "運休延長日数", key: "suspension_extended_days", type: "number" },
-  { no: 47, name: "バス券番号", key: "bus_ticket_number", type: "string" },
-  { no: 48, name: "リファレンスペーパー再印字回数", key: "reference_reprint_count", type: "string" },
-  { no: 49, name: "クレジット発行番号", key: "credit_issue_number", type: "string" },
-];
-
-const REQUEST_BUS_COMMUTER_DEFINITIONS = [
-  { no: 51, name: "エリア等コード", key: "area_code", type: "string" },
-  { no: 52, name: "系統番号1", key: "system_number_1", type: "string" },
-  { no: 53, name: "停留所1（発）", key: "departure_bus_stop_1", type: "string" },
-  { no: 54, name: "停留所1（着）", key: "arrival_bus_stop_1", type: "string" },
-  { no: 55, name: "系統番号2", key: "system_number_2", type: "string" },
-  { no: 56, name: "停留所2（発）", key: "departure_bus_stop_2", type: "string" },
-  { no: 57, name: "停留所2（着）", key: "arrival_bus_stop_2", type: "string" },
-];
-
-const REQUEST_RAILWAY_COMMUTER_DEFINITIONS = [
-  { no: 59, name: "発駅コード", key: "departure_station_code", type: "string" },
-  { no: 60, name: "着駅コード", key: "arrival_station_code", type: "string" },
-  { no: 61, name: "経由駅コード1", key: "transit_station_code_1", type: "string" },
-  { no: 62, name: "経由駅コード2", key: "transit_station_code_2", type: "string" },
-  { no: 63, name: "地域識別コード", key: "regional_identification_code", type: "string" },
-  { no: 64, name: "最終通用年月日", key: "last_valid_date", type: "string" },
-];
-
-/* =========================================================
-   rssponse 定義
-========================================================= */
-const RESPONSE_COMMON_DATA_DEFINITIONS = [
-  { no: 2, name: "業務種別コード", key: "business_type_code", type: "string" },
-  { no: 3, name: "要求送信年月日", key: "request_sent_date", type: "string" },
-  { no: 4, name: "要求送信時刻", key: "request_sent_time", type: "string" },
-  { no: 5, name: "リターンコード", key: "return_code", type: "string" },
-  { no: 6, name: "メッセージコード", key: "message_code", type: "string" },
-];
-
-/* =========================================================
    commuter_ticket_release_information 定義
 ========================================================= */
 const COMMUTER_DEFINITIONS = {
@@ -906,188 +818,46 @@ const SINGLE_ITEM_DETAILS_DEFINITIONS = [
    ログ抽出
 ========================================================= */
 function normalizeLogText(text) {
-  return text.replace(/\r\n/g, "\n");
+  return text.replace(/\r\n/g, "\n").replace(/""/g, '"');
 }
 
-function normalizeJsonText(text) {
-  return text.trim().replace(/^"/, "").replace(/"$/, "").replace(/""/g, '"').trim();
-}
-
-function tryParseJsonWithRepair(jsonText) {
-  const base = normalizeJsonText(jsonText);
-  const first = base.indexOf("{");
-  if (first < 0) return null;
-
-  const s = base.slice(first);
-
-  for (let add = 0; add <= 8; add++) {
-    try {
-      return JSON.parse(s + "}".repeat(add));
-    } catch (e) {
-      // 壊れたJSONは補正して再試行
-    }
-  }
-
-  return null;
-}
-
-function readBalancedJsonFrom(text, startIndex) {
-  let depth = 0;
-  let inString = false;
-  let escaped = false;
-
-  for (let i = startIndex; i < text.length; i++) {
-    const ch = text[i];
-    const next = text[i + 1];
-
-    if (inString) {
-      if (escaped) {
-        escaped = false;
-      } else if (ch === "\\") {
-        escaped = true;
-      } else if (ch === '"' && next === '"') {
-        i++;
-      } else if (ch === '"') {
-        inString = false;
-      }
-      continue;
-    }
-
-    if (ch === '"') {
-      inString = true;
-    } else if (ch === "{") {
-      depth++;
-    } else if (ch === "}") {
-      depth--;
-
-      if (depth === 0) {
-        return text.slice(startIndex, i + 1);
-      }
-    }
-  }
-
-  // 閉じ括弧不足の可能性がある場合、次のログ開始直前までを返す
-  const nextLog = text.indexOf("\n2026/", startIndex + 1);
-  return nextLog >= 0 ? text.slice(startIndex, nextLog) : text.slice(startIndex);
-}
-
-function extractTopLevelLogObjects(text) {
-  const normalized = normalizeLogText(text);
-  const objects = [];
-
-  let searchIndex = 0;
-
-  while (true) {
-    const logLevelIndex = normalized.indexOf('""logLevel""', searchIndex);
-    const logLevelIndex2 = normalized.indexOf('"logLevel"', searchIndex);
-
-    let foundIndex;
-    if (logLevelIndex === -1) {
-      foundIndex = logLevelIndex2;
-    } else if (logLevelIndex2 === -1) {
-      foundIndex = logLevelIndex;
-    } else {
-      foundIndex = Math.min(logLevelIndex, logLevelIndex2);
-    }
-
-    if (foundIndex < 0) break;
-
-    const start = normalized.lastIndexOf("{", foundIndex);
-    if (start < 0) {
-      searchIndex = foundIndex + 1;
-      continue;
-    }
-
-    const jsonText = readBalancedJsonFrom(normalized, start);
-    const obj = tryParseJsonWithRepair(jsonText);
-
-    if (obj && obj.logLevel && obj.aws_request_id && (obj.message === "request" || obj.message === "response") && obj.extra_data) {
-      objects.push(obj);
-    }
-
-    // 重要：壊れたJSON内に再出力された1行requestがあるため、少しだけ進める
-    searchIndex = foundIndex + 20;
-  }
-
-  const unique = new Map();
-
-  objects.forEach((obj) => {
-    const key = `${obj.aws_request_id}-${obj.message}-${obj.timestamp}`;
-    unique.set(key, obj);
-  });
-
-  return Array.from(unique.values());
-}
-
-function findRequestByAwsRequestId(text, awsRequestId) {
-  const normalized = normalizeLogText(text);
-  const targetId = awsRequestId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-  const candidates = [];
-  const regex = new RegExp(`\\{[\\s\\S]*?""aws_request_id""\\s*:\\s*""${targetId}""[\\s\\S]*?""message""\\s*:\\s*""request""[\\s\\S]*?""event""\\s*:\\s*\\{\\s*\\}\\s*\\}`, "g");
-
-  let match;
-  while ((match = regex.exec(normalized)) !== null) {
-    candidates.push(match[0]);
-  }
-
-  // message が aws_request_id より前にあるパターンも拾う
-  const regex2 = new RegExp(`\\{[\\s\\S]*?""message""\\s*:\\s*""request""[\\s\\S]*?""aws_request_id""\\s*:\\s*""${targetId}""[\\s\\S]*?""event""\\s*:\\s*\\{\\s*\\}\\s*\\}`, "g");
-
-  while ((match = regex2.exec(normalized)) !== null) {
-    candidates.push(match[0]);
-  }
-
-  for (const candidate of candidates.reverse()) {
-    const obj = tryParseJsonWithRepair(candidate);
-    if (obj && obj.aws_request_id === awsRequestId && obj.message === "request" && obj.extra_data) {
-      return obj;
-    }
-  }
-
-  return null;
-}
-
-function extractLogPairs(text) {
+function extractJsonObjects(text) {
   if (!text.trim()) return [];
 
-  const objects = extractTopLevelLogObjects(text);
-  const map = new Map();
+  const normalized = normalizeLogText(text);
+  const results = [];
 
-  objects.forEach((obj) => {
-    const key = obj.aws_request_id;
-    const current = map.get(key) || {};
+  const recordRegex = /(?:^|\n)\d{4}\/\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}\s*\t\s*"([\s\S]*?)"\s*(?=\n\d{4}\/\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}\s*\t\s*"|$)/g;
 
-    if (obj.message === "request") {
-      current.request = obj;
+  let match;
+
+  while ((match = recordRegex.exec(normalized)) !== null) {
+    const jsonText = match[1].trim();
+
+    try {
+      results.push(JSON.parse(jsonText));
+    } catch (e) {
+      console.error("JSON parse error:", e);
+      console.log(jsonText);
     }
+  }
 
-    if (obj.message === "response") {
-      current.response = obj;
-    }
+  if (results.length === 0) {
+    const first = normalized.indexOf("{");
+    const last = normalized.lastIndexOf("}");
 
-    map.set(key, current);
-  });
-
-  // response はあるが request がない場合、同じ aws_request_id の request を再検索
-  map.forEach((pair, awsRequestId) => {
-    if (pair.response && !pair.request) {
-      const repairedRequest = findRequestByAwsRequestId(text, awsRequestId);
-      if (repairedRequest) {
-        pair.request = repairedRequest;
-        map.set(awsRequestId, pair);
+    if (first >= 0 && last > first) {
+      try {
+        results.push(JSON.parse(normalized.slice(first, last + 1)));
+      } catch (e) {
+        console.error("JSON parse error:", e);
       }
     }
-  });
+  }
 
-  return Array.from(map.values())
-    .filter((pair) => pair.request || pair.response)
-    .sort((a, b) => {
-      const at = a.request?.timestamp || a.response?.timestamp || "";
-      const bt = b.request?.timestamp || b.response?.timestamp || "";
-      return bt.localeCompare(at);
-    });
+  return results;
 }
+
 /* =========================================================
    分割
 ========================================================= */
@@ -1210,41 +980,6 @@ function DataTable({ rows, showNo = false }) {
   );
 }
 
-function RequestDataTable({ rows, data }) {
-  return (
-    <table
-      border="1"
-      cellPadding="8"
-      style={{
-        width: "100%",
-        borderCollapse: "collapse",
-        fontSize: 14,
-      }}
-    >
-      <thead>
-        <tr style={{ background: "#eee" }}>
-          <th>No</th>
-          <th>項目名</th>
-          <th>キー</th>
-          <th>型</th>
-          <th>値</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((r) => (
-          <tr key={`${r.no}-${r.key}`}>
-            <td>{r.no}</td>
-            <td>{r.name}</td>
-            <td style={{ fontFamily: "monospace" }}>{r.key}</td>
-            <td>{r.type}</td>
-            <td style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>{data?.[r.key] === undefined || data?.[r.key] === null ? "" : String(data[r.key])}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
 function HexPreview({ title, hex }) {
   return (
     <div style={{ marginBottom: 12 }}>
@@ -1307,23 +1042,21 @@ export default function App() {
   const [fileName, setFileName] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [selectedLogIndex, setSelectedLogIndex] = useState(0);
-
+  const [selectedBlock, setSelectedBlock] = useState("");
   const [activeTab, setActiveTab] = useState("encoding");
 
-  const parsedLogs = useMemo(() => extractLogPairs(logText), [logText]);
-  const selectedPair = parsedLogs[selectedLogIndex] || parsedLogs[0] || {};
-  const selectedRequest = selectedPair.request;
-  const selectedResponse = selectedPair.response;
+  const parsedLogs = useMemo(() => extractJsonObjects(logText), [logText]);
+  const selectedLog = parsedLogs[selectedLogIndex] || parsedLogs[0];
 
   const encodingInformation = useMemo(() => {
-    return selectedResponse?.extra_data?.encoding_information || [];
-  }, [selectedResponse]);
+    return selectedLog?.extra_data?.encoding_information || [];
+  }, [selectedLog]);
 
-  const commuterTicketReleaseInformation = selectedResponse?.extra_data?.commuter_ticket_release_information || "";
+  const commuterTicketReleaseInformation = selectedLog?.extra_data?.commuter_ticket_release_information || "";
 
-  const singleItemDetailsData = selectedResponse?.extra_data?.single_item_details_data || "";
+  const singleItemDetailsData = selectedLog?.extra_data?.single_item_details_data || "";
 
-  const singleItemDetailsDataWritingIncomplete = selectedResponse?.extra_data?.single_item_details_data_writing_incomplete || "";
+  const singleItemDetailsDataWritingIncomplete = selectedLog?.extra_data?.single_item_details_data_writing_incomplete || "";
 
   const commuter = useMemo(() => {
     return splitCommuterTicketRelease(commuterTicketReleaseInformation);
@@ -1336,6 +1069,12 @@ export default function App() {
   const singleItemWritingIncompleteRows = useMemo(() => {
     return splitSingleItemDetails(singleItemDetailsDataWritingIncomplete);
   }, [singleItemDetailsDataWritingIncomplete]);
+
+  const visibleBlocks = useMemo(() => {
+    if (!selectedBlock) return encodingInformation;
+
+    return encodingInformation.filter((x) => String(x.block_number) === String(selectedBlock));
+  }, [encodingInformation, selectedBlock]);
 
   const parseStatus = getParseStatus(parsedLogs, encodingInformation);
 
@@ -1396,6 +1135,7 @@ export default function App() {
     setFileName(file.name);
     setLogText(text);
     setSelectedLogIndex(0);
+    setSelectedBlock("");
   };
 
   if (authLoading) {
@@ -1575,6 +1315,7 @@ export default function App() {
         onChange={(e) => {
           setLogText(e.target.value);
           setSelectedLogIndex(0);
+          setSelectedBlock("");
         }}
       />
 
@@ -1587,6 +1328,7 @@ export default function App() {
           value={selectedLogIndex}
           onChange={(e) => {
             setSelectedLogIndex(Number(e.target.value));
+            setSelectedBlock("");
           }}
           disabled={parsedLogs.length === 0}
         >
@@ -1595,17 +1337,55 @@ export default function App() {
           ) : (
             parsedLogs.map((log, index) => (
               <option key={index} value={index}>
-                {index + 1}件目 / {log.request?.timestamp || log.response?.timestamp || "timestampなし"} /{log.request?.extra_data?.common_data?.business_type_code || ""} →{log.response?.extra_data?.common_data?.business_type_code || ""}
+                {index + 1}件目 / {log.timestamp || "timestampなし"} / {log.extra_data?.common_data?.business_type_code || ""}
               </option>
             ))
           )}
         </select>
 
-        <button onClick={() => setActiveTab("command")}>コマンド</button>
-        <button onClick={() => setActiveTab("response")}>レスポンス</button>
+        <button onClick={() => setActiveTab("encoding")}>encoding_information</button>
+
+        <button onClick={() => setActiveTab("commuter")}>commuter_ticket_release_information</button>
+
+        <button onClick={() => setActiveTab("singleItem")}>single_item_details_data</button>
       </div>
 
-      {activeTab === "command" && (
+      {activeTab === "encoding" && (
+        <>
+          <select value={selectedBlock} onChange={(e) => setSelectedBlock(e.target.value)} disabled={encodingInformation.length === 0}>
+            <option value="">全ブロック</option>
+            {encodingInformation.map((x) => (
+              <option key={x.block_number} value={x.block_number}>
+                ブロック {x.block_number}
+              </option>
+            ))}
+          </select>
+
+          {visibleBlocks.map((block) => {
+            const rows = splitEncodingBlock(block.block_number, block.binary_string);
+
+            return (
+              <div
+                key={block.block_number}
+                style={{
+                  marginTop: 24,
+                  border: "1px solid #ddd",
+                  borderRadius: 8,
+                  padding: 16,
+                }}
+              >
+                <h2>ブロック {block.block_number}</h2>
+
+                <HexPreview title="binary_string" hex={block.binary_string} />
+
+                {rows.length === 0 ? <p style={{ color: "red" }}>このブロックNo.の定義が未登録です。</p> : <DataTable rows={rows} />}
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {activeTab === "commuter" && (
         <div
           style={{
             marginTop: 24,
@@ -1614,148 +1394,48 @@ export default function App() {
             padding: 16,
           }}
         >
-          <h2>コマンド request</h2>
+          <h2>commuter_ticket_release_information</h2>
 
-          {!selectedRequest ? (
-            <p style={{ color: "red" }}>request が見つかりません。</p>
-          ) : (
-            <>
-              <h3>No.1 共通データ common_data</h3>
-              <RequestDataTable rows={REQUEST_COMMON_DATA_DEFINITIONS} data={selectedRequest.extra_data?.common_data || {}} />
+          <h3>No.1〜21</h3>
+          <DataTable rows={commuter.baseRows} showNo />
 
-              <div style={{ marginTop: 28 }} />
+          <div style={{ marginTop: 28 }} />
 
-              <h3>No.10 新券情報 new_ticket_information</h3>
-              <RequestDataTable rows={REQUEST_NEW_TICKET_DEFINITIONS} data={selectedRequest.extra_data?.new_ticket_information || {}} />
+          <h3>No.22 カード活性情報</h3>
+          <HexPreview title="カード活性情報 64Byte" hex={commuter.activeInfoHex} />
+          <DataTable rows={commuter.activeInfoRows} />
 
-              {(selectedRequest.extra_data?.new_ticket_information?.commuter_pass_information || []).map((commuterPass, index) => (
-                <div key={index} style={{ marginTop: 28 }}>
-                  <h3>No.28 定期情報 commuter_pass_information [{index + 1}]</h3>
-                  <RequestDataTable rows={REQUEST_COMMUTER_PASS_DEFINITIONS} data={commuterPass} />
+          <div style={{ marginTop: 28 }} />
 
-                  <div style={{ marginTop: 20 }} />
+          <h3>No.23 アクセスチェック情報</h3>
+          <HexPreview title="アクセスチェック情報 16Byte" hex={commuter.accessInfoHex} />
+          <DataTable rows={commuter.accessInfoRows} />
 
-                  <h4>No.50 バス／路面電車定期情報 bus_commuter_pass_information</h4>
-                  <RequestDataTable rows={REQUEST_BUS_COMMUTER_DEFINITIONS} data={commuterPass.bus_commuter_pass_information || {}} />
+          <div style={{ marginTop: 28 }} />
 
-                  <div style={{ marginTop: 20 }} />
+          <h3>No.24 定期券発券印刷情報</h3>
+          <HexPreview title="定期券発券印刷情報 前半 144Byte" hex={commuter.ticketPrintHeadHex} />
+          <DataTable rows={commuter.ticketPrintHeadRows} />
 
-                  <h4>No.58 地域鉄道定期情報 railway_commuter_pass_information</h4>
-                  <RequestDataTable rows={REQUEST_RAILWAY_COMMUTER_DEFINITIONS} data={commuterPass.railway_commuter_pass_information || {}} />
-                </div>
-              ))}
-              <h3>original_ticket_information.encoding_information</h3>
-              {(selectedRequest.extra_data?.original_ticket_information?.encoding_information || []).map((block) => {
-                const rows = splitEncodingBlock(block.block_number, block.binary_string);
+          <div style={{ marginTop: 28 }} />
 
-                return (
-                  <div key={block.block_number} style={{ marginTop: 24 }}>
-                    <h4>ブロック {block.block_number}</h4>
-                    <HexPreview title="binary_string" hex={block.binary_string} />
-                    {rows.length === 0 ? <p style={{ color: "red" }}>このブロックNo.の定義が未登録です。</p> : <DataTable rows={rows} />}
-                  </div>
-                );
-              })}
-            </>
-          )}
+          <HexPreview title="バス路面電車独自情報サービス ブロック0 16Byte" hex={commuter.busPrivateBlock0Hex} />
+          <DataTable rows={commuter.busPrivateBlock0Rows} />
+
+          <div style={{ marginTop: 28 }} />
+
+          <h3>No.25 定期券判定情報</h3>
+          <HexPreview title="定期券判定情報 48Byte" hex={commuter.judgeHex} />
+          <DataTable rows={commuter.judgeRows} />
         </div>
       )}
 
-      {activeTab === "response" && (
-        <div
-          style={{
-            marginTop: 24,
-            border: "1px solid #ddd",
-            borderRadius: 8,
-            padding: 16,
-          }}
-        >
-          <h2>レスポンス response</h2>
+      {activeTab === "singleItem" && (
+        <>
+          <Section title="single_item_details_data" hex={singleItemDetailsData} rows={singleItemRows} showNo />
 
-          {!selectedResponse ? (
-            <p style={{ color: "red" }}>response が見つかりません。</p>
-          ) : (
-            <>
-              <h3>No.1 共通データ common_data</h3>
-              <RequestDataTable rows={RESPONSE_COMMON_DATA_DEFINITIONS} data={selectedResponse.extra_data?.common_data || {}} />
-
-              <div style={{ marginTop: 28 }} />
-
-              <h3>No.7 エンコード情報 encoding_information</h3>
-              {encodingInformation.length === 0 ? (
-                <p style={{ color: "red" }}>encoding_information が見つかりません。</p>
-              ) : (
-                encodingInformation.map((block) => {
-                  const rows = splitEncodingBlock(block.block_number, block.binary_string);
-
-                  return (
-                    <div key={block.block_number} style={{ marginTop: 24 }}>
-                      <h4>ブロック {block.block_number}</h4>
-                      <HexPreview title="binary_string" hex={block.binary_string} />
-                      {rows.length === 0 ? <p style={{ color: "red" }}>このブロックNo.の定義が未登録です。</p> : <DataTable rows={rows} />}
-                    </div>
-                  );
-                })
-              )}
-
-              <div style={{ marginTop: 28 }} />
-
-              <h3>No.10 定期発売情報 commuter_ticket_release_information</h3>
-              {!commuterTicketReleaseInformation ? (
-                <p style={{ color: "red" }}>commuter_ticket_release_information が見つかりません。</p>
-              ) : (
-                <>
-                  <div style={{ marginBottom: 12 }}>
-                    <strong>全体サイズ：</strong>
-                    {hexToBytes(commuterTicketReleaseInformation).length} Byte / {commuterTicketReleaseInformation.length} HEX文字
-                  </div>
-
-                  <h4>No.1〜21</h4>
-                  <DataTable rows={commuter.baseRows} showNo />
-
-                  <div style={{ marginTop: 28 }} />
-
-                  <h4>No.22 カード活性情報</h4>
-                  <HexPreview title="カード活性情報 64Byte" hex={commuter.activeInfoHex} />
-                  <DataTable rows={commuter.activeInfoRows} />
-
-                  <div style={{ marginTop: 28 }} />
-
-                  <h4>No.23 アクセスチェック情報</h4>
-                  <HexPreview title="アクセスチェック情報 16Byte" hex={commuter.accessInfoHex} />
-                  <DataTable rows={commuter.accessInfoRows} />
-
-                  <div style={{ marginTop: 28 }} />
-
-                  <h4>No.24 定期券発券印刷情報</h4>
-                  <HexPreview title="定期券発券印刷情報 前半 144Byte" hex={commuter.ticketPrintHeadHex} />
-                  <DataTable rows={commuter.ticketPrintHeadRows} />
-
-                  <div style={{ marginTop: 28 }} />
-
-                  <HexPreview title="バス路面電車独自情報サービス ブロック0 16Byte" hex={commuter.busPrivateBlock0Hex} />
-                  <DataTable rows={commuter.busPrivateBlock0Rows} />
-
-                  <div style={{ marginTop: 28 }} />
-
-                  <h4>No.25 定期券判定情報</h4>
-                  <HexPreview title="定期券判定情報 48Byte" hex={commuter.judgeHex} />
-                  <DataTable rows={commuter.judgeRows} />
-                </>
-              )}
-
-              <div style={{ marginTop: 28 }} />
-
-              <h3>No.11 一件明細データ single_item_details_data</h3>
-              <Section title="single_item_details_data" hex={singleItemDetailsData} rows={singleItemRows} showNo />
-
-              <div style={{ marginTop: 28 }} />
-
-              <h3>No.12 一件明細データ 書込未了 single_item_details_data_writing_incomplete</h3>
-              <Section title="single_item_details_data_writing_incomplete" hex={singleItemDetailsDataWritingIncomplete} rows={singleItemWritingIncompleteRows} showNo />
-            </>
-          )}
-        </div>
+          <Section title="single_item_details_data_writing_incomplete" hex={singleItemDetailsDataWritingIncomplete} rows={singleItemWritingIncompleteRows} showNo />
+        </>
       )}
     </div>
   );
